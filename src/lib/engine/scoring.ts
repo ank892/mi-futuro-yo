@@ -210,7 +210,7 @@ function calcBlindaje(r: SurveyResponses, country: typeof MACRO_DATA["MX"]): Sub
     weight: 0.25,
     label: subLabel(value),
     details: [
-      `Seguro de salud: ${Math.round(health)}/100`,
+      `Blindaje salud: ${Math.round(health)}/100`,
       `Fondo de emergencia: ${emergency}/100`,
       `Gestión de deuda: ${debt}/100`,
       `Preparación retiro: ${pension}/100`,
@@ -337,7 +337,7 @@ export function detectLeaks(r: SurveyResponses, country: typeof MACRO_DATA["MX"]
     const severity = country.health_oop_percent > 30 ? "alta" : "media";
     leaks.push({
       id: "no_health_insurance",
-      name: "Sin seguro de gastos médicos mayores",
+      name: "Sin blindaje médico mayor",
       severity,
       estimated_20yr_impact_usd: round0(impact),
       monthly_impact_usd: round0(impact / 240),
@@ -351,11 +351,11 @@ export function detectLeaks(r: SurveyResponses, country: typeof MACRO_DATA["MX"]
     const impact = annual * 8;   // ~8 años de ingreso protegido (viudo/a + hijos)
     leaks.push({
       id: "no_life_insurance",
-      name: `Sin protección de vida para ${r.dependents} dependiente${r.dependents > 1 ? "s" : ""}`,
+      name: `Sin blindaje de vida para ${r.dependents} dependiente${r.dependents > 1 ? "s" : ""}`,
       severity: "alta",
       estimated_20yr_impact_usd: round0(impact),
       monthly_impact_usd: round0(impact / 240),
-      description: `Si tú faltas, tus ${r.dependents} dependiente${r.dependents > 1 ? "s" : ""} enfrentaría${r.dependents > 1 ? "n" : ""} una pérdida de $${round0(impact).toLocaleString()} de ingresos futuros. Un plan de vida temporal cubre esa brecha por ~$12-16/mes.`,
+      description: `Si tú faltas, tus ${r.dependents} dependiente${r.dependents > 1 ? "s" : ""} enfrentaría${r.dependents > 1 ? "n" : ""} una pérdida de $${round0(impact).toLocaleString()} de ingresos futuros. Un potenciador de vida temporal cierra esa brecha por ~$12-16/mes.`,
       pillar_affected: "blindaje",
     });
   }
@@ -458,21 +458,26 @@ export function recommendBoosters(r: SurveyResponses, leaks: WealthLeak[]): Weal
       const product = catalog.find(p => p.code === code);
       if (!product) continue;
 
-      const annual = product.annual_premium_usd;
-      const monthly = product.monthly_premium_usd;
+      // Ajuste de prima por edad (base es 30-39 = 1.0)
+      const ageFactor = ageMultiplier(r.age_range, product.category);
+      const annual = Math.round(product.annual_premium_usd * ageFactor);
+      const monthly = Math.round(product.monthly_premium_usd * ageFactor);
       const total_20yr = annual * 20;
       const roa = total_20yr > 0 ? leak.estimated_20yr_impact_usd / total_20yr : 0;
+
+      // Producto con precios ajustados a la edad del usuario (no mutamos el catálogo global)
+      const pricedProduct = { ...product, annual_premium_usd: annual, monthly_premium_usd: monthly };
 
       boosters.push({
         id: `${leak.id}__${code}`,
         leak_id: leak.id,
-        product,
+        product: pricedProduct,
         monthly_cost_usd: monthly,
         annual_cost_usd: annual,
         leak_impact_covered_usd: leak.estimated_20yr_impact_usd,
         roa_multiplier: round1(roa),
         monthly_cost_range: monthlyCostRange(monthly),
-        rationale: rationaleFor(leak, product, r),
+        rationale: rationaleFor(leak, pricedProduct, r),
         rank: 0,
         pillar_boosted: leak.pillar_affected,
       });
@@ -492,6 +497,25 @@ export function recommendBoosters(r: SurveyResponses, leaks: WealthLeak[]): Weal
   return top;
 }
 
+/**
+ * Factor multiplicador de la prima según la edad del asegurado.
+ * Base = tramo 30-39 = 1.0.
+ * Categorías con tarificación más agresiva por edad: life, income_protection.
+ * Salud/catastrófico: pendiente moderada.
+ */
+function ageMultiplier(age_range: string, category: string): number {
+  const isLife = category === "life" || category === "income_protection";
+  const map: Record<string, [number, number]> = {
+    // [salud/catastrófico, vida/income]
+    "20-25": [0.78, 0.55],
+    "26-30": [0.88, 0.75],
+    "31-35": [0.96, 0.90],
+    "36-40": [1.10, 1.20],
+  };
+  const t = map[age_range] ?? [1.0, 1.0];
+  return isLife ? t[1] : t[0];
+}
+
 function monthlyCostRange(m: number): string {
   const low = Math.round(m * 0.85);
   const high = Math.round(m * 1.15);
@@ -501,12 +525,12 @@ function monthlyCostRange(m: number): string {
 function rationaleFor(leak: WealthLeak, product: any, r: SurveyResponses): string {
   const country = MACRO_DATA[r.country];
   if (leak.id === "no_health_insurance") {
-    return `En ${country.name}, sin cobertura, un evento médico puede costar ~$${round0(r.monthly_income_usd * 12 * 3).toLocaleString()}. ${product.name} te da hasta $${product.max_coverage_usd?.toLocaleString() ?? "cobertura ilimitada"} a partir de ${product.monthly_premium_usd < 50 ? "menos de $50/mes" : `~$${product.monthly_premium_usd}/mes`}.`;
+    return `En ${country.name}, sin blindaje médico, un evento grave puede costar ~$${round0(r.monthly_income_usd * 12 * 3).toLocaleString()}. ${product.name} te da hasta $${product.max_coverage_usd?.toLocaleString() ?? "capital ilimitado"} desde ${product.monthly_premium_usd < 50 ? "menos de $50/mes" : `~$${product.monthly_premium_usd}/mes`}.`;
   }
   if (leak.id === "no_life_insurance") {
-    return `Con ${r.dependents} dependiente${r.dependents > 1 ? "s" : ""}, tu vida productiva vale ~$${round0(r.monthly_income_usd * 12 * 8).toLocaleString()}. Un rider de vida temporal cubre esa brecha por ~$${product.monthly_premium_usd}/mes.`;
+    return `Con ${r.dependents} dependiente${r.dependents > 1 ? "s" : ""}, tu vida productiva vale ~$${round0(r.monthly_income_usd * 12 * 8).toLocaleString()}. Este blindaje temporal cierra esa brecha por ~$${product.monthly_premium_usd}/mes.`;
   }
-  return `${product.name}: cobertura ideal para el gap detectado.`;
+  return `${product.name}: potenciador ideal para el gap detectado.`;
 }
 
 function generateNonInsuranceBoosters(r: SurveyResponses, leaks: WealthLeak[], startRank: number): WealthBooster[] {
@@ -669,7 +693,8 @@ function projectScenario(
   const balances = [0];
   let current = monthly_contribution;
   for (let y = 1; y <= years; y++) {
-    current *= 1 + wage_growth / 12;
+    // wage_growth is ANNUAL — apply once per year (fix from POC bug)
+    current *= 1 + wage_growth;
     const annual_contrib = current * 12;
     const prev = balances[balances.length - 1];
     const year_return = prev * annual_return;

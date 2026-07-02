@@ -14,7 +14,16 @@ export default function Compartir() {
     if (raw) setP(JSON.parse(raw));
   }, []);
 
-  if (!p) return null;
+  if (!p) {
+    return (
+      <main className="mx-auto flex min-h-screen max-w-md items-center justify-center px-6">
+        <div className="w-full text-center">
+          <p className="mb-4 text-white/60">Necesitas completar el análisis primero para compartir.</p>
+          <Link href="/quiz"><Button>Comenzar</Button></Link>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="mx-auto max-w-md px-6 py-8">

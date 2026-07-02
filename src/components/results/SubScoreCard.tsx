@@ -6,7 +6,7 @@ const PILLAR_META = {
   ingreso: { label: "Ingreso", icon: "💰", desc: "Robustez de ingresos" },
   ahorro: { label: "Ahorro", icon: "🏦", desc: "Capacidad de ahorro" },
   crecimiento: { label: "Crecimiento", icon: "📈", desc: "Multiplicación de capital" },
-  blindaje: { label: "Blindaje", icon: "🛡️", desc: "Protección patrimonial" },
+  blindaje: { label: "Blindaje", icon: "🛡️", desc: "Blindaje patrimonial" },
 };
 
 export function SubScoreCard({ pillar, detail }: { pillar: keyof typeof PILLAR_META; detail: SubScore }) {

@@ -90,8 +90,8 @@ export const INSURANCE_CATALOG: InsuranceProduct[] = [
     max_coverage_usd: 7_000_000,
     monthly_premium_usd: 104,   // ~$1250/año
     annual_premium_usd: 1250,
-    description: "Plan médico integral con cobertura mundial de $7M, libre elección de médicos, maternidad y transplantes.",
-    features: ["Cobertura mundial $7M", "Libre elección", "Maternidad $7.5K", "Rider vida opcional"],
+    description: "Plan médico integral con blindaje mundial de $7M, libre elección de médicos, maternidad y transplantes.",
+    features: ["Blindaje mundial $7M", "Libre elección", "Maternidad $7.5K", "Booster vida opcional"],
     countries: ["MX","CO","CR"],
   },
   {
@@ -102,7 +102,7 @@ export const INSURANCE_CATALOG: InsuranceProduct[] = [
     max_coverage_usd: null,
     monthly_premium_usd: 68,    // ~$820/año
     annual_premium_usd: 820,
-    description: "Cobertura sin límite anual, deducible flexible desde $2K. Ideal para primera póliza internacional.",
+    description: "Blindaje sin límite anual, deducible flexible desde $2K. Ideal como primer potenciador internacional.",
     features: ["Sin límite anual", "Deducible flexible", "Waiver por accidente"],
     countries: ["MX","CO","CR"],
   },
@@ -114,7 +114,7 @@ export const INSURANCE_CATALOG: InsuranceProduct[] = [
     max_coverage_usd: 5_000_000,
     monthly_premium_usd: 165,   // ~$1980/año
     annual_premium_usd: 1980,
-    description: "Plan premium con cobertura mundial $5M. Incluye padres e hijos políticos, segunda opinión médica.",
+    description: "Plan premium con blindaje mundial $5M. Incluye padres e hijos políticos, segunda opinión médica.",
     features: ["Padres/in-laws", "Segunda opinión", "Multilingüe", "Maternidad $10K"],
     countries: ["MX","CO","CR"],
   },
@@ -126,8 +126,8 @@ export const INSURANCE_CATALOG: InsuranceProduct[] = [
     max_coverage_usd: 1_000_000,
     monthly_premium_usd: 43,    // ~$520/año
     annual_premium_usd: 520,
-    description: "Plan catastrófico económico. Cubre 8 condiciones críticas (cáncer, infarto, ACV, insuficiencia renal, etc.) hasta $1M por condición.",
-    features: ["8 condiciones críticas", "Cleveland Clinic segunda opinión", "Cobertura mundial", "Bajo costo"],
+    description: "Plan catastrófico económico. Blinda 8 condiciones críticas (cáncer, infarto, ACV, insuficiencia renal, etc.) hasta $1M por condición.",
+    features: ["8 condiciones críticas", "Cleveland Clinic segunda opinión", "Blindaje mundial", "Bajo costo"],
     countries: ["MX","CO","CR"],
   },
   {
@@ -138,8 +138,8 @@ export const INSURANCE_CATALOG: InsuranceProduct[] = [
     max_coverage_usd: 1_000_000,
     monthly_premium_usd: 65,    // ~$780/año
     annual_premium_usd: 780,
-    description: "Plan internacional con cobertura mundial de $1M. Múltiples redes (Prime, Max, Ultra), soporte 24/7 multilingüe.",
-    features: ["Multi-red", "24/7 multilingüe", "Rider medicamentos", "Rider accidentes"],
+    description: "Plan internacional con blindaje mundial de $1M. Múltiples redes (Prime, Max, Ultra), soporte 24/7 multilingüe.",
+    features: ["Multi-red", "24/7 multilingüe", "Booster medicamentos", "Booster accidentes"],
     countries: ["MX","CO","CR"],
   },
   {
@@ -150,7 +150,7 @@ export const INSURANCE_CATALOG: InsuranceProduct[] = [
     max_coverage_usd: 500_000,
     monthly_premium_usd: 14,    // ~$168/año para 30-39
     annual_premium_usd: 168,
-    description: "Seguro de vida temporal hasta $500K de suma asegurada, renovable, con múltiples beneficiarios.",
+    description: "Blindaje de vida temporal hasta $500K de capital, renovable, con múltiples beneficiarios.",
     features: ["Suma hasta $500K", "Renovable", "Múltiples beneficiarios"],
     countries: ["MX","CO","CR"],
   },
@@ -162,7 +162,7 @@ export const INSURANCE_CATALOG: InsuranceProduct[] = [
     max_coverage_usd: 0,
     monthly_premium_usd: 26,    // ~$312/año
     annual_premium_usd: 312,
-    description: "Seguro de invalidez / protección de ingreso. Reemplaza hasta 70% del salario ante incapacidad temporal o permanente.",
+    description: "Blindaje de invalidez / continuidad de ingreso. Reemplaza hasta 70% del salario ante incapacidad temporal o permanente.",
     features: ["Hasta 70% salario", "Corto y largo plazo", "Independientes elegibles"],
     countries: ["MX","CO","CR"],
   },

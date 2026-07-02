@@ -8,6 +8,29 @@ export const runtime = "nodejs";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+
+    // Validación de enums antes de invocar el engine
+    const validAge = ["20-25","26-30","31-35","36-40"];
+    const validCountry = ["MX","CO","CR"];
+    const validDebt = ["no_debt","controlled","pressured","uncontrolled"];
+    const validEmergency = ["0-1","2-3","4-6","6+"];
+    if (!validAge.includes(body.age_range)) {
+      return NextResponse.json({ ok: false, error: "age_range inválido", field: "age_range" }, { status: 422 });
+    }
+    if (!validCountry.includes(body.country)) {
+      return NextResponse.json({ ok: false, error: "country inválido (MX/CO/CR)", field: "country" }, { status: 422 });
+    }
+    if (!validDebt.includes(body.debt_relationship)) {
+      return NextResponse.json({ ok: false, error: "debt_relationship inválido", field: "debt_relationship" }, { status: 422 });
+    }
+    if (!validEmergency.includes(body.emergency_months)) {
+      return NextResponse.json({ ok: false, error: "emergency_months inválido", field: "emergency_months" }, { status: 422 });
+    }
+    const income = Number(body.monthly_income_usd);
+    if (!Number.isFinite(income) || income < 100 || income > 100000) {
+      return NextResponse.json({ ok: false, error: "monthly_income_usd fuera de rango", field: "monthly_income_usd" }, { status: 422 });
+    }
+
     const responses = normalize(body);
     const profile = calculateWealthScore(responses);
 

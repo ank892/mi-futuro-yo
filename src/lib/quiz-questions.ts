@@ -138,8 +138,8 @@ export const QUESTIONS: QuizQuestion[] = [
   },
   {
     id: 10,
-    text: "¿Tienes un seguro de gastos médicos mayores?",
-    help: "Cobertura hospitalaria/cirugías (privado o laboral).",
+    text: "¿Tienes un blindaje médico mayor (privado o laboral)?",
+    help: "Blindaje hospitalario/quirúrgico que cubra imprevistos graves.",
     variable: "has_health_insurance",
     type: "yes_no",
     feeds_pillar: ["blindaje"],
