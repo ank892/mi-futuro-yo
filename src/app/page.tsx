@@ -1,101 +1,57 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import { GlassCard } from "@/components/ui/GlassCard";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="mx-auto max-w-6xl px-6 py-10 sm:py-16">
+      <section className="text-center">
+        <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-xs font-medium text-white/70">
+          <span className="h-2 w-2 rounded-full bg-mint animate-pulse" />
+          Diagnóstico patrimonial con IA · Modelos financieros LATAM
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+        <h1 className="text-balance text-4xl font-black leading-tight tracking-tight sm:text-6xl">
+          Descubre tu <span className="text-gradient-mint">Índice de Riqueza Futura</span>
+        </h1>
+        <p className="mx-auto mt-4 max-w-2xl text-balance text-lg text-white/70 sm:text-xl">
+          12 preguntas. 90 segundos. Un plano claro de tus fugas de capital y los potenciadores
+          que multiplican tu patrimonio a 20 años.
+        </p>
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Link href="/quiz">
+            <Button size="lg">Comenzar mi análisis →</Button>
+          </Link>
+          <span className="text-xs text-white/50">Gratis · Sin registro · 100% anónimo</span>
+        </div>
+      </section>
+
+      <section className="mt-20 grid gap-6 sm:grid-cols-3">
+        {[
+          { n: "01", t: "Responde 12 preguntas", d: "Sobre ingresos, ahorro, deuda y proyecciones. Sin nombre, sin email." },
+          { n: "02", t: "Obtén tu Score 0–100", d: "Ingreso, Ahorro, Crecimiento y Blindaje. Con tu percentil vs. peers." },
+          { n: "03", t: "Activa tus Potenciadores", d: "Hasta 3 acciones específicas con ROA calculado a 20 años." },
+        ].map((s) => (
+          <GlassCard key={s.n}>
+            <div className="mb-3 text-4xl font-black text-mint">{s.n}</div>
+            <h3 className="mb-2 text-lg font-bold">{s.t}</h3>
+            <p className="text-sm text-white/60">{s.d}</p>
+          </GlassCard>
+        ))}
+      </section>
+
+      <section className="mt-20 text-center">
+        <p className="mb-4 text-sm uppercase tracking-widest text-white/50">
+          Basado en fuentes verificables
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-semibold text-white/70">
+          <span>· INEGI</span><span>· DANE</span><span>· BCCR</span>
+          <span>· MSCI ACWI</span><span>· Modelo actuarial LATAM</span>
+        </div>
+      </section>
+
+      <footer className="mt-20 text-center text-xs text-white/40">
+        © 2026 Mi Futuro Yo · Análisis educativo, no constituye asesoría de inversión.
       </footer>
-    </div>
+    </main>
   );
 }
