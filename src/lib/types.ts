@@ -102,6 +102,60 @@ export interface WealthBooster {
   pillar_boosted: Pillar;
 }
 
+/** Nivel de riqueza (gamificación por rango de score) */
+export interface WealthLevel {
+  key: "seed" | "explorer" | "builder" | "optimizer" | "architect";
+  min: number;
+  max: number;
+  name: string;
+  emoji: string;
+  tagline: string;
+  description: string;
+  color: string;
+  next_level_delta?: number; // puntos para subir de nivel
+  next_level_name?: string;
+}
+
+/** Badge/logro desbloqueado por el usuario */
+export interface Achievement {
+  id: string;
+  name: string;
+  emoji: string;
+  description: string;
+  rarity: "comun" | "raro" | "epico" | "legendario";
+  unlocked: boolean;
+}
+
+/** Distribución vs peers para visualizar */
+export interface PeerDistribution {
+  buckets: { label: string; min: number; max: number; peer_pct: number; is_user: boolean }[];
+  user_bucket_index: number;
+  ahead_of_pct: number;              // % de peers superados
+  cohort_size_hint: string;          // "~12,400 profesionales en México"
+}
+
+/** Narrativa personalizada */
+export interface WealthNarrative {
+  hero_headline: string;             // Titular emocional grande
+  hero_subheadline: string;          // Subtítulo
+  story_paragraph: string;           // 3-5 líneas, referencia datos del usuario
+  future_self_message: string;       // "Tu Yo del 2045 dice..."
+  urgency_hook: string;              // 1 línea de urgencia
+  celebration_hook?: string;         // si score alto
+}
+
+/** Contenido pre-generado para compartir */
+export interface ShareContent {
+  headline: string;                  // texto principal grande
+  whatsapp_text: string;
+  twitter_text: string;
+  linkedin_text: string;
+  instagram_overlay: string;
+  og_title: string;
+  og_description: string;
+  share_url: string;                 // relative
+}
+
 export interface WealthProfile {
   overall_score: number;
   score_label: ScoreLabel;
@@ -117,6 +171,11 @@ export interface WealthProfile {
   boosters: WealthBooster[];                 // top-3 recomendaciones
   trajectory: WealthTrajectory;
   peer_benchmark: PeerBenchmark;
+  peer_distribution: PeerDistribution;
+  wealth_level: WealthLevel;
+  achievements: Achievement[];
+  narrative: WealthNarrative;
+  share: ShareContent;
   survey_responses: SurveyResponses;
   country_context: {
     name: string;

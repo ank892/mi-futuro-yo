@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const STEPS = [
-  "Calibrando modelo actuarial LATAM…",
-  "Analizando tus 4 pilares patrimoniales…",
-  "Detectando fugas de capital…",
-  "Calculando ROA de tus potenciadores…",
-  "Proyectando trayectoria a 20 años…",
+  "Consultando a tu Yo del 2045…",
+  "Buscando las fugas que nadie te había mostrado…",
+  "Comparándote con miles de profesionales LATAM…",
+  "Calculando cuánto vale realmente tu futuro…",
+  "Tu Futuro Yo está escribiendo su veredicto…",
 ];
 
 export default function Calculando() {

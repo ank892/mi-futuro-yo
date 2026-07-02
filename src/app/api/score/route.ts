@@ -95,7 +95,7 @@ function normalize(body: any): SurveyResponses {
     emergency_months: body.emergency_months,
     has_health_insurance: Boolean(body.has_health_insurance),
     knows_pension:
-      body.knows_pension === "null" || body.knows_pension === null
+      body.knows_pension === null || body.knows_pension === "null" || body.knows_pension === undefined
         ? null
         : body.knows_pension === true || body.knows_pension === "true",
     financial_plan_clarity: Number(body.financial_plan_clarity ?? 5),

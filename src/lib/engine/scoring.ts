@@ -10,6 +10,10 @@ import type {
   Country, Pillar, ScoreLabel, Confidence,
 } from "../types";
 import { MACRO_DATA, SCORING_CONFIG, GLOBAL_BENCHMARKS, HEALTH_COVERAGE_BY_COUNTRY, INSURANCE_CATALOG } from "../data/reference";
+import {
+  computeWealthLevel, computeAchievements, computePeerDistribution,
+  computeNarrative, computeShareContent,
+} from "./narrative";
 
 const clamp = (v: number, min = 0, max = 100) => Math.max(min, Math.min(max, v));
 const round1 = (v: number) => Math.round(v * 10) / 10;
@@ -50,6 +54,12 @@ export function calculateWealthScore(r: SurveyResponses): WealthProfile {
   const confidence = assessConfidence(r);
   const score_label = labelScore(overall_score);
 
+  const wealth_level = computeWealthLevel(overall_score);
+  const peer_distribution = computePeerDistribution(overall_score, peer_benchmark.cohort_median_score, r.country);
+  const achievements = computeAchievements(r, leaks, peer_benchmark, s_ingreso.value, s_blindaje.value);
+  const narrative = computeNarrative(r, overall_score, wealth_level, leaks, boosters, trajectory, country.name, peer_benchmark.percentile);
+  const share = computeShareContent(overall_score, wealth_level, peer_benchmark);
+
   return {
     overall_score,
     score_label,
@@ -60,6 +70,11 @@ export function calculateWealthScore(r: SurveyResponses): WealthProfile {
     boosters,
     trajectory,
     peer_benchmark,
+    peer_distribution,
+    wealth_level,
+    achievements,
+    narrative,
+    share,
     survey_responses: r,
     country_context: {
       name: country.name,

@@ -2,13 +2,19 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Mi Futuro Yo — Analiza tu trayectoria patrimonial en 90 segundos",
+  title: "Mi Futuro Yo | ¿Cuánto vale tu futuro?",
   description:
-    "Descubre tu Score de Riqueza, detecta tus fugas de capital y recibe potenciadores personalizados para optimizar tu patrimonio a 20 años.",
+    "12 preguntas, 3 minutos. Descubre tu Índice de Riqueza Futura, tus fugas de dinero y cómo se ve tu patrimonio en 20 años.",
   openGraph: {
-    title: "Mi Futuro Yo",
-    description: "Tu diagnóstico patrimonial en 90 segundos",
+    title: "Mi Futuro Yo | ¿Cuánto vale tu futuro?",
+    description:
+      "12 preguntas, 3 minutos. Descubre tu Índice de Riqueza Futura, tus fugas de dinero y cómo se ve tu patrimonio en 20 años.",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mi Futuro Yo | ¿Cuánto vale tu futuro?",
+    description: "Descubre tu Índice de Riqueza Futura en 3 minutos.",
   },
 };
 

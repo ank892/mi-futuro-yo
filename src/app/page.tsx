@@ -11,11 +11,11 @@ export default function Home() {
           Diagnóstico patrimonial con IA · Modelos financieros LATAM
         </div>
         <h1 className="text-balance text-4xl font-black leading-tight tracking-tight sm:text-6xl">
-          Descubre tu <span className="text-gradient-mint">Índice de Riqueza Futura</span>
+          ¿Cómo se ve tu <span className="text-gradient-mint">Yo del 2045</span>?
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-balance text-lg text-white/70 sm:text-xl">
-          12 preguntas. 90 segundos. Un plano claro de tus fugas de capital y los potenciadores
-          que multiplican tu patrimonio a 20 años.
+          12 preguntas. 3 minutos. Descubre tu Índice de Riqueza Futura, tus fugas de dinero
+          y cuánto vale tu patrimonio proyectado a 20 años.
         </p>
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link href="/quiz">
